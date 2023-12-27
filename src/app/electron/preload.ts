@@ -1,6 +1,6 @@
 import { contextBridge } from 'electron';
-const path = window.require('path');
-const fs = window.require('fs');
+const path = window.require('node:path');
+const fs = window.require('node:fs');
 
 const defaultPath = path.join(process.env.HOME, '.ssh');
 
