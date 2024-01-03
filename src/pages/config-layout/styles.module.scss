@@ -1,0 +1,9 @@
+.config-layout {
+	height: 100vh;
+	display: flex;
+
+	&__content {
+		height: 100%;
+		width: 100%;
+	}
+}
