@@ -5,8 +5,9 @@ import api from '../api';
 declare global {
 	interface Window {
 		electron: {
-			getListOfConfigs: () => Record<string, any>[];
-			getConfigByHost: (host: string) => Record<string, any>;
+			getListOfConfigs: () => Promise<Record<string, any>[]>;
+			getConfigByHost: (host: string) => Promise<Record<string, any>>;
+			deleteConfig: (host: string) => Promise<void>;
 		};
 	}
 }

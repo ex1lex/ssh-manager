@@ -1,12 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ConfigPageContainer from '../../widgets/config-page-container';
 import styles from './styles.module.scss';
 
 const ConfigPage: FC = () => {
+	const [config, setConfig] = useState(undefined);
+
 	const { configId } = useParams();
-	const config = window.electron.getConfigByHost(configId);
+
+	const getConfig = async () => {
+		const _config = await window.electron.getConfigByHost(configId);
+		setConfig(_config);
+	};
+
+	useEffect(() => {
+		getConfig();
+	}, [configId]);
 
 	if (!config) return null;
 

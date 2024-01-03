@@ -1,16 +1,35 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import SvgIcon, { Icons } from '../svg-icon';
 import styles from './styles.module.scss';
 
 const ConfigsList: FC = () => {
-	const configs = window.electron.getListOfConfigs();
+	const [configs, setConfigs] = useState([]);
+
+	const getConfigs = async () => {
+		const _configs = await window.electron.getListOfConfigs();
+		setConfigs(_configs);
+	};
+
+	const onDeleteConfigClick = async (val: string) => {
+		await window.electron.deleteConfig(val);
+		toast('Config deleted');
+	};
+
+	const onEditConfigClick = (val: string) => {
+		console.log('EDIT', val);
+	};
+
+	useEffect(() => {
+		getConfigs();
+	}, []);
 
 	return (
 		<div className={styles['configs-list']}>
 			<ul className={styles['configs-list__list']}>
-				{configs.map(({ value }: any) => {
+				{configs?.map(({ value }: any) => {
 					return (
 						<li
 							key={`configs-list-item-${value}`}
@@ -20,10 +39,18 @@ const ConfigsList: FC = () => {
 								{value}
 							</Link>
 							<div className={styles['configs-list__actions']}>
-								<button type="button" className={styles['configs-list__btn']}>
+								<button
+									onClick={() => onEditConfigClick(value)}
+									type="button"
+									className={styles['configs-list__btn']}
+								>
 									<SvgIcon icon={Icons.edit} />
 								</button>
-								<button type="button" className={styles['configs-list__btn']}>
+								<button
+									onClick={() => onDeleteConfigClick(value)}
+									type="button"
+									className={styles['configs-list__btn']}
+								>
 									<SvgIcon icon={Icons.delete} />
 								</button>
 							</div>
