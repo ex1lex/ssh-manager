@@ -1,0 +1,21 @@
+@import 'src/app/styles';
+
+.actions {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+
+	&__btn {
+		background: rgb(79, 70, 229);
+		border-radius: $borderRadius;
+		border: none;
+		color: white;
+		cursor: pointer;
+		padding: 8px 16px;
+		opacity: 1;
+
+		&:hover {
+			background: rgba(79, 70, 229, $hoverOpacity);
+		}
+	}
+}
