@@ -1,56 +1,89 @@
 const SSHConfig = window.require('ssh-config');
+
 const path = window.require('node:path');
 const fs = window.require('node:fs');
 
 const defaultPath = path.join(process.env.HOME, '.ssh');
 
-const getFile = (fileName: string): string => {
-	return fs.readFileSync(`${defaultPath}/${fileName}`, 'utf8');
+const getFile = async (fileName: string): Promise<string> => {
+	return await new Promise((res, rej) => {
+		fs.readFile(`${defaultPath}/${fileName}`, 'utf8', (err: any, data: any) => {
+			if (err) rej(err);
+			res(data);
+		});
+	});
 };
 
-const createFile = (fileName: string, type = '', data = '') => {
-	const result = fs.writeFileSync(
-		`${defaultPath}/${fileName}${type ? `.${type}` : ''}`,
-		data,
-		'utf8'
-	);
+const createFile = async (fileName: string, type = '', data = '') => {
+	const result = await new Promise((res) => {
+		fs.writeFile(
+			`${defaultPath}/${fileName}${type ? `.${type}` : ''}`,
+			data,
+			'utf8',
+			() => {
+				res(true);
+			}
+		);
+	});
 
 	return result;
 };
 
-const parseConfig = () => {
-	const input = getFile('config');
-	const config: any[] = SSHConfig.parse(input);
-	return config
-		.filter((item) => item?.config)
-		.map((item) => {
-			return {
-				...item,
-				value: item.value.toString(),
-			};
+const writeFile = async (fileName: string, fileText: any) => {
+	await new Promise((res) => {
+		fs.writeFile(`${defaultPath}/${fileName}`, fileText, 'utf8', () => {
+			res(true);
 		});
+	});
 };
 
-const getConfigFile = (): any[] => {
+const parseConfig = async () => {
+	const input = await getFile('config');
+	return SSHConfig.parse(input);
+};
+
+const getConfigFile = async (): Promise<any[]> => {
 	try {
-		return parseConfig();
+		await getFile('config');
 	} catch (e) {
-		createFile('config');
-		return parseConfig();
+		await createFile('config');
+	}
+	try {
+		const config = await parseConfig();
+		return config
+			.filter((item: any) => item?.config)
+			.map((item: any) => {
+				return {
+					...item,
+					value: item.value.toString(),
+				};
+			});
+	} catch (e) {
+		console.error(e);
+		return [];
 	}
 };
 
-const getListOfConfigs = () => {
-	return getConfigFile();
+const getListOfConfigs = async () => {
+	const config = await getConfigFile();
+	return config;
 };
 
-const getConfigByHost = (host: string): Record<string, any> => {
-	const configs = parseConfig();
+const getConfigByHost = async (host: string): Promise<Record<string, any>> => {
+	const configs = await parseConfig();
+	return configs.find((item: any) => item?.value?.toString() === host);
+};
 
-	return configs.find((item) => item.value === host);
+const deleteConfig = async (host: string) => {
+	const config = await parseConfig();
+	const modConfig = config.filter(
+		(item: any) => item?.value?.toString() !== host
+	);
+	await writeFile('config', SSHConfig.stringify(modConfig));
 };
 
 export default {
 	getListOfConfigs,
 	getConfigByHost,
+	deleteConfig,
 };
