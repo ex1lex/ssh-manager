@@ -3,7 +3,18 @@ import type { ModuleOptions } from 'webpack';
 export const rules: Required<ModuleOptions>['rules'] = [
 	{
 		test: /\.s[ac]ss$/i,
-		use: ['style-loader', 'css-loader', 'sass-loader'],
+		use: [
+			'style-loader',
+			{
+				loader: 'css-loader',
+				options: {
+					modules: {
+						localIdentName: '[hash:base64:5]--[local]',
+					},
+				},
+			},
+			'sass-loader',
+		],
 	},
 	{
 		test: /\.css$/,
