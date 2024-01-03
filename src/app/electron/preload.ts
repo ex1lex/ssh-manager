@@ -1,48 +1,22 @@
 import { contextBridge } from 'electron';
-const path = window.require('node:path');
-const fs = window.require('node:fs');
 
-const defaultPath = path.join(process.env.HOME, '.ssh');
+import api from '../api';
 
 declare global {
 	interface Window {
 		electron: {
-			getFileNames: () => string[];
-			getConfigFile: () => string[];
+			getListOfConfigs: () => Record<string, any>[];
+			getConfigByHost: (host: string) => Record<string, any>;
 		};
 	}
 }
 
-const getFileNames = (): string[] => {
-	return fs.readdirSync(defaultPath);
-};
-
-const getFile = (fileName: string): string => {
-	return fs.readFileSync(`${defaultPath}/${fileName}`, 'utf8');
-};
-
-const createFile = (fileName: string, type = '', data = '') => {
-	const result = fs.writeFileSync(
-		`${defaultPath}/${fileName}${type ? `.${type}` : ''}`,
-		data,
-		'utf8'
-	);
-
-	return result;
-};
+// const getFileNames = (): string[] => {
+// 	return fs.readdirSync(defaultPath);
+// };
 
 contextBridge.exposeInMainWorld('electron', {
-	getFileNames: () => {
-		return getFileNames();
-	},
-	getConfigFile: () => {
-		try {
-			return getFile('config').split(/^\s*$/m);
-		} catch (e) {
-			createFile('config');
-			return getFile('config');
-		}
-	},
+	...api,
 	// readFile: (fileName: any) => {
 	// 	const fileText = fs.readFileSync(getFilePath(fileName), 'utf8');
 	// 	return fileText;
