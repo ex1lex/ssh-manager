@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState, useAppSelector } from '..';
+import { useAppSelector } from '..';
 
 interface IState {
 	configs: Record<string, any>[];
