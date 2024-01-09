@@ -1,30 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import useConfig from '../../shared/hooks/useConfig';
 import SvgIcon, { Icons } from '../svg-icon';
 import styles from './styles.module.scss';
 
 const ConfigsList: FC = () => {
-	const [configs, setConfigs] = useState([]);
-
-	const getConfigs = async () => {
-		const _configs = await window.electron.getListOfConfigs();
-		setConfigs(_configs);
-	};
+	const { configs, onDelete } = useConfig();
 
 	const onDeleteConfigClick = async (val: string) => {
-		await window.electron.deleteConfig(val);
-		toast('Config deleted');
+		onDelete(val).then(() => toast('Config deleted'));
 	};
 
 	const onEditConfigClick = (val: string) => {
 		console.log('EDIT', val);
 	};
-
-	useEffect(() => {
-		getConfigs();
-	}, []);
 
 	return (
 		<div className={styles['configs-list']}>
