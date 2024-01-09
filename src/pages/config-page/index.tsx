@@ -1,24 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { FC } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { ROUTES, useConfig } from '../../shared';
 import ConfigPageContainer from '../../widgets/config-page-container';
 import styles from './styles.module.scss';
 
 const ConfigPage: FC = () => {
-	const [config, setConfig] = useState(undefined);
-
+	const navigate = useNavigate();
 	const { configId } = useParams();
+	const { getConfig } = useConfig();
 
-	const getConfig = async () => {
-		const _config = await window.electron.getConfigByHost(configId);
-		setConfig(_config);
-	};
+	const config = getConfig(configId);
 
-	useEffect(() => {
-		getConfig();
-	}, [configId]);
-
-	if (!config) return null;
+	if (!config) {
+		navigate(ROUTES.ROOT);
+		return null;
+	}
 
 	return (
 		<ConfigPageContainer title={`Config ${config.value}`}>
