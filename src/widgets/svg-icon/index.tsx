@@ -3,6 +3,7 @@ import React from 'react';
 export enum Icons {
 	delete = 'delete',
 	edit = 'edit',
+	refresh = 'refresh',
 }
 
 interface Props {
