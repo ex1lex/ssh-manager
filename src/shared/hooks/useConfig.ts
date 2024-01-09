@@ -27,11 +27,16 @@ export const useConfig = () => {
 		await _getConfigs();
 	};
 
+	const createConfig = async (newConfig: TConfig) => {
+		await window.electron.createConfig(newConfig);
+		_getConfigs();
+	};
+
 	useEffect(() => {
 		if (!configs.length) {
 			_getConfigs();
 		}
 	}, []);
 
-	return { configs, onDelete, onRefresh, getConfig };
+	return { configs, onDelete, onRefresh, getConfig, createConfig };
 };

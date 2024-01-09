@@ -6,11 +6,22 @@ import React, { FC } from 'react';
 import styles from './styles.module.scss';
 
 const Actions: FC = () => {
-	const { onRefresh } = useConfig();
+	const { onRefresh, createConfig } = useConfig();
+
+	const onCreateNewConfig = () => {
+		createConfig({
+			Host: 'yandex',
+			HostName: 'ya.ru',
+		});
+	};
 
 	return (
 		<div className={styles.actions}>
-			<button className={styles.actions__btn} type="button">
+			<button
+				className={styles.actions__btn}
+				type="button"
+				onClick={onCreateNewConfig}
+			>
 				Create config
 			</button>
 			<button
