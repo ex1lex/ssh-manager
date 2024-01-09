@@ -1,18 +1,18 @@
+import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
 import RefreshIcon from '@widgets/refresh-icon';
 import classNames from 'classnames';
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
 const Actions: FC = () => {
-	const { onRefresh, createConfig } = useConfig();
+	const navigate = useNavigate();
+	const { onRefresh } = useConfig();
 
 	const onCreateNewConfig = () => {
-		createConfig({
-			Host: 'yandex',
-			HostName: 'ya.ru',
-		});
+		navigate(ROUTES.NEW_CONFIG);
 	};
 
 	return (
