@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { useAppSelector } from '..';
+import { TConfig } from '../../../shared';
 
 interface IState {
-	configs: Record<string, any>[];
+	configs: TConfig[];
 }
 
 const initialState: IState = {
