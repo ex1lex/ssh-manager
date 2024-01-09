@@ -65,8 +65,7 @@ const getConfigFile = async (): Promise<any[]> => {
 };
 
 const getListOfConfigs = async () => {
-	const config = await getConfigFile();
-	return config;
+	return await getConfigFile();
 };
 
 const getConfigByHost = async (host: string): Promise<Record<string, any>> => {
@@ -80,6 +79,7 @@ const deleteConfig = async (host: string) => {
 		(item: any) => item?.value?.toString() !== host
 	);
 	await writeFile('config', SSHConfig.stringify(modConfig));
+	return await getListOfConfigs();
 };
 
 export default {
