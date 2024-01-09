@@ -3,10 +3,14 @@
 .actions {
 	width: 100%;
 	display: flex;
+	align-items: center;
 	gap: 10px;
 
 	&__btn {
-		background: rgb(79, 70, 229);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: $primaryColor;
 		border-radius: $borderRadius;
 		border: none;
 		color: white;
@@ -15,7 +19,18 @@
 		opacity: 1;
 
 		&:hover {
-			background: rgba(79, 70, 229, $hoverOpacity);
+			background: getHoverColor($primaryColor);
+		}
+
+		&_type_svg {
+			padding: 0;
+			background: none;
+			color: $primaryColor;
+
+			&:hover {
+				background: none;
+				opacity: $hoverOpacity;
+			}
 		}
 	}
 }
