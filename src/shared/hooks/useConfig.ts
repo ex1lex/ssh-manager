@@ -1,8 +1,7 @@
+import { useAppDispatch } from '@app/redux';
+import { getConfigSelector, setConfigs } from '@app/redux/slices/configs';
+import { TConfig } from '@shared/types';
 import { useEffect } from 'react';
-
-import { useAppDispatch } from '../../app/redux';
-import { getConfigSelector, setConfigs } from '../../app/redux/slices/configs';
-import { TConfig } from '../types';
 
 export const useConfig = () => {
 	const dispatch = useAppDispatch();
