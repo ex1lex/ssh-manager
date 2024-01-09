@@ -1,8 +1,8 @@
+import { ROUTES, useConfig } from '@shared';
+import { ConfigPageContainer } from '@widgets';
 import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ROUTES, useConfig } from '../../shared';
-import ConfigPageContainer from '../../widgets/config-page-container';
 import styles from './styles.module.scss';
 
 const ConfigPage: FC = () => {

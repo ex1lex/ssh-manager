@@ -1,7 +1,8 @@
+import { Sidebar } from '@widgets';
 import React, { FC } from 'react';
-import Sidebar from '../../widgets/sidebar';
-import styles from './styles.module.scss';
 import { Outlet } from 'react-router-dom';
+
+import styles from './styles.module.scss';
 
 const ConfigLayout: FC = () => {
 	return (

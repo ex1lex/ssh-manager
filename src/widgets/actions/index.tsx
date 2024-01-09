@@ -1,8 +1,8 @@
+import { Icons, useConfig } from '@shared';
+import { SvgIcon } from '@widgets';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
-import { useConfig } from '../../shared';
-import SvgIcon, { Icons } from '../svg-icon';
 import styles from './styles.module.scss';
 
 const Actions: FC = () => {

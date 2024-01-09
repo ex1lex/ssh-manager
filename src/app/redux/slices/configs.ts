@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TConfig } from '@shared';
 
 import { useAppSelector } from '..';
-import { TConfig } from '../../../shared';
 
 interface IState {
 	configs: TConfig[];

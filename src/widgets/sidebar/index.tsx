@@ -1,7 +1,7 @@
+import { Actions, ConfigsList } from '@widgets';
 import React, { FC } from 'react';
+
 import styles from './styles.module.scss';
-import Actions from '../actions';
-import ConfigsList from '../configs-list';
 
 const Sidebar: FC = () => {
 	return (

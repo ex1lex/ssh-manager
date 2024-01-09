@@ -13,6 +13,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
+      "@app": ["./src/app"],
+      "@app/*": ["./src/app/*"],
+      "@shared": ["./src/shared"],
+      "@widgets": ["./src/widgets"],
+      "@pages": ["./src/pages"],
       "*": ["node_modules/*"]
     }
   },

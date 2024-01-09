@@ -1,6 +1,6 @@
+import { ROUTES } from '@shared';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { ROUTES } from '../shared';
 import ConfigLayout from './config-layout';
 import ConfigPage from './config-page';
 import ConfigPlaceholderPage from './config-placeholder-page';

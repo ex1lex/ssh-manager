@@ -1,6 +1,6 @@
+import { ConfigPageContainer } from '@widgets';
 import React, { FC } from 'react';
 
-import ConfigPageContainer from '../../widgets/config-page-container';
 import styles from './styles.module.scss';
 
 const ConfigPlaceholderPage: FC = () => {
