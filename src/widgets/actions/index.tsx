@@ -1,10 +1,13 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
+import { useConfig } from '../../shared';
 import SvgIcon, { Icons } from '../svg-icon';
 import styles from './styles.module.scss';
 
 const Actions: FC = () => {
+	const { onRefresh } = useConfig();
+
 	return (
 		<div className={styles.actions}>
 			<button className={styles.actions__btn} type="button">
@@ -16,6 +19,7 @@ const Actions: FC = () => {
 					styles.actions__btn_type_svg
 				)}
 				type="button"
+				onClick={onRefresh}
 			>
 				<SvgIcon icon={Icons.refresh} />
 			</button>

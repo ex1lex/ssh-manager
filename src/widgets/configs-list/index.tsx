@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import useConfig from '../../shared/hooks/useConfig';
+import { useConfig } from '../../shared';
 import SvgIcon, { Icons } from '../svg-icon';
 import styles from './styles.module.scss';
 

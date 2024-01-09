@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../app/redux';
 import { getConfigSelector, setConfigs } from '../../app/redux/slices/configs';
 
-const useConfig = () => {
+export const useConfig = () => {
 	const dispatch = useAppDispatch();
 
 	const configs = getConfigSelector();
@@ -18,11 +18,13 @@ const useConfig = () => {
 		dispatch(setConfigs(newConfig));
 	};
 
+	const onRefresh = async () => {
+		await getConfigs();
+	};
+
 	useEffect(() => {
 		getConfigs();
 	}, []);
 
-	return { configs, onDelete };
+	return { configs, onDelete, onRefresh };
 };
-
-export default useConfig;
