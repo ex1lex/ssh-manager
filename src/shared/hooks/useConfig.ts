@@ -4,10 +4,9 @@ import { useAppDispatch } from '../../app/redux';
 import { getConfigSelector, setConfigs } from '../../app/redux/slices/configs';
 
 const useConfig = () => {
-	const configs = getConfigSelector();
-	console.log('test1', configs);
-
 	const dispatch = useAppDispatch();
+
+	const configs = getConfigSelector();
 
 	const getConfigs = async () => {
 		const newConfig: any = await window.electron.getListOfConfigs();
@@ -22,6 +21,7 @@ const useConfig = () => {
 	useEffect(() => {
 		getConfigs();
 	}, []);
+
 	return { configs, onDelete };
 };
 
