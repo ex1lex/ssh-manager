@@ -1,4 +1,4 @@
-import { Sidebar } from '@widgets';
+import Sidebar from '@widgets/sidebar';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 

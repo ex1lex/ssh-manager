@@ -1,5 +1,5 @@
-import { Icons, useConfig } from '@shared';
-import { SvgIcon } from '@widgets';
+import { useConfig } from '@shared/hooks';
+import RefreshIcon from '@widgets/refresh-icon';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
@@ -21,7 +21,7 @@ const Actions: FC = () => {
 				type="button"
 				onClick={onRefresh}
 			>
-				<SvgIcon icon={Icons.refresh} />
+				<RefreshIcon />
 			</button>
 		</div>
 	);

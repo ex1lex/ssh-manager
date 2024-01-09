@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-const Refresh: FC = () => {
+const RefreshIcon: FC = () => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -17,4 +17,4 @@ const Refresh: FC = () => {
 	);
 };
 
-export default Refresh;
+export default RefreshIcon;

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConfig } from '@shared';
+import { TConfig } from '@shared/types';
 
 import { useAppSelector } from '..';
 

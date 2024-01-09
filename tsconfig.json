@@ -15,9 +15,12 @@
     "paths": {
       "@app": ["./src/app"],
       "@app/*": ["./src/app/*"],
-      "@shared": ["./src/shared"],
       "@widgets": ["./src/widgets"],
+      "@widgets/*": ["./src/widgets/*"],
       "@pages": ["./src/pages"],
+      "@pages/*": ["./src/pages/*"],
+      "@shared": ["./src/shared"],
+      "@shared/*": ["./src/shared/*"],
       "*": ["node_modules/*"]
     }
   },

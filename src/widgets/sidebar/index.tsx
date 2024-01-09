@@ -1,4 +1,5 @@
-import { Actions, ConfigsList } from '@widgets';
+import Actions from '@widgets/actions';
+import ConfigsList from '@widgets/configs-list';
 import React, { FC } from 'react';
 
 import styles from './styles.module.scss';

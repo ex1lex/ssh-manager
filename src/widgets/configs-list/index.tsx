@@ -1,5 +1,6 @@
-import { Icons, useConfig } from '@shared';
-import { SvgIcon } from '@widgets';
+import { useConfig } from '@shared/hooks';
+import DeleteIcon from '@widgets/delete-icon';
+import EditIcon from '@widgets/edit-icon';
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -35,14 +36,14 @@ const ConfigsList: FC = () => {
 									type="button"
 									className={styles['configs-list__btn']}
 								>
-									<SvgIcon icon={Icons.edit} />
+									<EditIcon />
 								</button>
 								<button
 									onClick={() => onDeleteConfigClick(value)}
 									type="button"
 									className={styles['configs-list__btn']}
 								>
-									<SvgIcon icon={Icons.delete} />
+									<DeleteIcon />
 								</button>
 							</div>
 						</li>

@@ -1,4 +1,4 @@
-import { ConfigPageContainer } from '@widgets';
+import ConfigPageContainer from '@widgets/config-page-container';
 import React, { FC } from 'react';
 
 import styles from './styles.module.scss';

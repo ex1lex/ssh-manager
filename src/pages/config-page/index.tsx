@@ -1,5 +1,6 @@
-import { ROUTES, useConfig } from '@shared';
-import { ConfigPageContainer } from '@widgets';
+import { ROUTES } from '@shared/constants';
+import { useConfig } from '@shared/hooks';
+import ConfigPageContainer from '@widgets/config-page-container';
 import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
