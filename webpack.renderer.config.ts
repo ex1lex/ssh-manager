@@ -1,14 +1,12 @@
 import path from 'path';
 import type { Configuration } from 'webpack';
 
-import { plugins } from './webpack.plugins';
 import { rules } from './webpack.rules';
 
 export const rendererConfig: Configuration = {
 	module: {
 		rules,
 	},
-	plugins,
 	resolve: {
 		alias: {
 			'@app': path.resolve(__dirname, 'src/app'),

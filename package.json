@@ -36,7 +36,6 @@
     "eslint": "^8.0.1",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "fork-ts-checker-webpack-plugin": "^7.2.13",
     "fs": "^0.0.1-security",
     "node-loader": "^2.0.0",
     "prettier": "^3.1.1",
@@ -50,6 +49,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.0.1",
+    "@types/yup": "^0.32.0",
     "classnames": "^2.5.1",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
