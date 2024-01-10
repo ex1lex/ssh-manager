@@ -1,7 +1,7 @@
 import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
+import CustomButton from '@widgets/custom-button';
 import RefreshIcon from '@widgets/refresh-icon';
-import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,23 +17,12 @@ const Actions: FC = () => {
 
 	return (
 		<div className={styles.actions}>
-			<button
-				className={styles.actions__btn}
-				type="button"
-				onClick={onCreateNewConfig}
-			>
-				Create config
-			</button>
-			<button
-				className={classNames(
-					styles.actions__btn,
-					styles.actions__btn_type_svg
-				)}
-				type="button"
+			<CustomButton title="Create config" onClick={onCreateNewConfig} />
+			<CustomButton
+				variant="outlined"
+				title={<RefreshIcon />}
 				onClick={onRefresh}
-			>
-				<RefreshIcon />
-			</button>
+			/>
 		</div>
 	);
 };
