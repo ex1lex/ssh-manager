@@ -21,7 +21,12 @@ const ConfigsList: FC = () => {
 	return (
 		<div className={styles['configs-list']}>
 			<ul className={styles['configs-list__list']}>
-				{configs?.map(({ value }: any) => {
+				{configs?.map((_value: any) => {
+					const value = _value?.Host;
+					if (!value) {
+						return null;
+					}
+
 					return (
 						<li
 							key={`configs-list-item-${value}`}

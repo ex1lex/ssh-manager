@@ -13,8 +13,8 @@ export const useConfig = () => {
 		dispatch(setConfigs(newConfig));
 	};
 
-	const getConfig = (val: string): TConfig | undefined => {
-		return configs.find((item: any) => item?.value?.toString() === val);
+	const getConfig = async (val: string): Promise<TConfig | undefined> => {
+		return await window.electron.getConfigByHost(val);
 	};
 
 	const onDelete = async (val: string) => {

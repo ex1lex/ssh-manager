@@ -50,14 +50,14 @@ const getConfigFile = async (): Promise<any[]> => {
 	}
 	try {
 		const config = await parseConfig();
-		return config
-			.filter((item: any) => item?.config)
-			.map((item: any) => {
-				return {
-					...item,
-					value: item.value.toString(),
-				};
-			});
+		return config.reduce((acc: any[], item: any) => {
+			try {
+				acc.push(config.compute(item.value));
+			} catch (e) {
+				return acc;
+			}
+			return acc;
+		}, []);
 	} catch (e) {
 		console.error(e);
 		return [];
@@ -70,7 +70,11 @@ const getListOfConfigs = async () => {
 
 const getConfigByHost = async (host: string): Promise<Record<string, any>> => {
 	const configs = await parseConfig();
-	return configs.find((item: any) => item?.value?.toString() === host);
+	const config = configs.compute(host);
+	if (!config) {
+		throw new Error();
+	}
+	return config;
 };
 
 const deleteConfig = async (host: string) => {
