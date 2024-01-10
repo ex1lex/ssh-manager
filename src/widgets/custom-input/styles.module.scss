@@ -1,0 +1,29 @@
+@import 'src/app/styles';
+
+.custom-input {
+	&__label {
+		box-sizing: border-box;
+		display: block;
+		margin: 0 0 5px;
+		color: $textColor;
+		font-style: normal;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 16px;
+	}
+
+	&__input {
+		box-sizing: border-box;
+		width: 100%;
+		resize: vertical;
+	}
+
+	&__error {
+		margin: 0;
+		color: red;
+		font-style: normal;
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 14px;
+	}
+}
