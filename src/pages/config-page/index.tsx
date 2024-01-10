@@ -26,7 +26,7 @@ const ConfigPage: FC = () => {
 		getConfig(configId)
 			.then((res) => setConfig(res))
 			.catch(() => navigate(ROUTES.ROOT));
-	}, []);
+	}, [configId]);
 
 	if (!config) {
 		return null;
