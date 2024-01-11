@@ -33,7 +33,7 @@ const ConfigPage: FC = () => {
 	}
 
 	return (
-		<ConfigPageContainer title={`Config ${config.Host}`}>
+		<ConfigPageContainer showHeader title={`Config ${config.Host}`}>
 			<ul className={styles['config-page']}>
 				{values.map((item: any) => {
 					if (!item?.param) return null;

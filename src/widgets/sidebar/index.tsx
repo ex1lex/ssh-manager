@@ -8,7 +8,9 @@ const Sidebar: FC = () => {
 	return (
 		<div className={styles.sidebar}>
 			<Actions />
-			<ConfigsList />
+			<div className={styles['sidebar__container']}>
+				<ConfigsList />
+			</div>
 		</div>
 	);
 };

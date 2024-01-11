@@ -1,3 +1,4 @@
+import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
 import DeleteIcon from '@widgets/delete-icon';
 import EditIcon from '@widgets/edit-icon';
@@ -33,13 +34,13 @@ const ConfigsList: FC = () => {
 					if (!value) {
 						return null;
 					}
-
+					const link = ROUTES.CONFIG.replace(':configId', value);
 					return (
 						<li
 							key={`configs-list-item-${value}`}
 							className={styles['configs-list__item']}
 						>
-							<Link to={value} className={styles['configs-list__link']}>
+							<Link to={link} className={styles['configs-list__link']}>
 								{value}
 							</Link>
 							<div className={styles['configs-list__actions']}>

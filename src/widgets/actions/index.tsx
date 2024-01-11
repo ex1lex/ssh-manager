@@ -18,7 +18,7 @@ const Actions: FC = () => {
 	}, [navigate]);
 
 	const onShowTxtConfigClick = useCallback(() => {
-		navigate(ROUTES.NEW_CONFIG);
+		navigate(ROUTES.TXT_CONFIG);
 	}, [navigate]);
 
 	return (
