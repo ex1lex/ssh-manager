@@ -3,7 +3,6 @@ import DeleteIcon from '@widgets/delete-icon';
 import EditIcon from '@widgets/edit-icon';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import styles from './styles.module.scss';
 
@@ -15,7 +14,7 @@ const ConfigsList: FC = () => {
 	} = useConfig();
 
 	const onDeleteConfigClick = async (val: string) => {
-		onDelete(val).then(() => toast('Config deleted'));
+		onDelete(val);
 	};
 
 	const onEditConfigClick = (val: string) => {

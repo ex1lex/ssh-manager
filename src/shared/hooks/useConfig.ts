@@ -19,6 +19,7 @@ export const useConfig = () => {
 
 	const onDelete = async (val: string) => {
 		const _configs: any = await window.electron.deleteConfig(val);
+		toast('Config deleted');
 		setConfigs(_configs);
 	};
 
