@@ -9,12 +9,12 @@ import styles from './styles.module.scss';
 const ConfigsList: FC = () => {
 	const {
 		state: { configs },
-		onDelete,
+		deleteConfig,
 		getConfigs,
 	} = useConfig();
 
 	const onDeleteConfigClick = async (val: string) => {
-		onDelete(val);
+		deleteConfig(val);
 	};
 
 	const onEditConfigClick = (val: string) => {
