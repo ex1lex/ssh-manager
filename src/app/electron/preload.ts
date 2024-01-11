@@ -11,7 +11,7 @@ declare global {
 			deleteConfig: (host: string) => Promise<TConfig[]>;
 			createConfig: (newConfig: TConfig) => Promise<void>;
 			createConfigFromString: (newConfig: string) => Promise<void>;
-			getConfigFileTxt: (fileName: string) => Promise<string>;
+			getTxtConfig: () => Promise<string>;
 		};
 	}
 }

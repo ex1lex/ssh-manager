@@ -73,9 +73,9 @@ export const useConfig = () => {
 	};
 
 	const getTxtConfig = () => {
-		window.electron
-			.getConfigFileTxt('config')
-			.then((_txtConfig) => setTxtConfig(_txtConfig));
+		window.electron.getTxtConfig().then((_txtConfig) => {
+			_setTxtConfig(_txtConfig);
+		});
 	};
 
 	return {

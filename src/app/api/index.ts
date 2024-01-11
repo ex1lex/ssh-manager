@@ -5,9 +5,17 @@ const fs = window.require('node:fs');
 
 const defaultPath = path.join(process.env.HOME, '.ssh');
 
+const defaultConfigName = 'config';
+
+const preparePath = (fileName: string) => `${defaultPath}/${fileName}`;
+
+const checkIsFileExist = (fileName: string): boolean => {
+	return fs.existsSync(preparePath(fileName));
+};
+
 const getFile = async (fileName: string): Promise<string> => {
 	return await new Promise((res, rej) => {
-		fs.readFile(`${defaultPath}/${fileName}`, 'utf8', (err: any, data: any) => {
+		fs.readFile(preparePath(fileName), 'utf8', (err: any, data: any) => {
 			if (err) rej(err);
 			res(data);
 		});
@@ -17,7 +25,7 @@ const getFile = async (fileName: string): Promise<string> => {
 const createFile = async (fileName: string, type = '', data = '') => {
 	const result = await new Promise((res) => {
 		fs.writeFile(
-			`${defaultPath}/${fileName}${type ? `.${type}` : ''}`,
+			preparePath(`${fileName}${type ? `.${type}` : ''}`),
 			data,
 			'utf8',
 			() => {
@@ -31,22 +39,22 @@ const createFile = async (fileName: string, type = '', data = '') => {
 
 const writeFile = async (fileName: string, fileText: any) => {
 	await new Promise((res) => {
-		fs.writeFile(`${defaultPath}/${fileName}`, fileText, 'utf8', () => {
+		fs.writeFile(preparePath(fileName), fileText, 'utf8', () => {
 			res(true);
 		});
 	});
 };
 
 const parseConfig = async () => {
-	const input = await getFile('config');
+	const input = await getFile(defaultConfigName);
 	return SSHConfig.parse(input);
 };
 
 const getConfigFile = async (): Promise<any[]> => {
 	try {
-		await getFile('config');
+		await getFile(defaultConfigName);
 	} catch (e) {
-		await createFile('config');
+		await createFile(defaultConfigName);
 	}
 	try {
 		const config = await parseConfig();
@@ -82,14 +90,14 @@ const deleteConfig = async (host: string) => {
 	const modConfig = config.filter(
 		(item: any) => item?.value?.toString() !== host
 	);
-	await writeFile('config', SSHConfig.stringify(modConfig));
+	await writeFile(defaultConfigName, SSHConfig.stringify(modConfig));
 	return await getListOfConfigs();
 };
 
 const createConfig = async (newConfigs: Record<string, any>[]) => {
 	const config = await parseConfig();
 	config.unshift(...newConfigs);
-	await writeFile('config', SSHConfig.stringify(config));
+	await writeFile(defaultConfigName, SSHConfig.stringify(config));
 };
 
 const createConfigFromString = async (newConfig: string) => {
@@ -97,13 +105,16 @@ const createConfigFromString = async (newConfig: string) => {
 	await createConfig(parsedConfig);
 };
 
-const getConfigFileTxt = async () => {
-	try {
-		return await getFile('config');
-	} catch (e) {
-		await createFile('config');
+const checkAndCreateConfig = async (fileName: string) => {
+	if (!checkIsFileExist(fileName)) {
+		await createFile(fileName);
 	}
-	return await getFile('config');
+};
+
+const getTxtConfig = async () => {
+	await checkAndCreateConfig(defaultConfigName);
+
+	return await getFile(defaultConfigName);
 };
 
 export default {
@@ -112,5 +123,5 @@ export default {
 	deleteConfig,
 	createConfig,
 	createConfigFromString,
-	getConfigFileTxt,
+	getTxtConfig,
 };
