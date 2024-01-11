@@ -9,6 +9,8 @@ declare global {
 			getConfigByHost: (host: string) => Promise<Record<string, any>>;
 			deleteConfig: (host: string) => Promise<void>;
 			createConfig: (newConfig: Record<string, any>) => Promise<void>;
+			createConfigFromString: (newConfig: string) => Promise<void>;
+			getConfigFileTxt: (fileName: string) => Promise<string>;
 		};
 	}
 }

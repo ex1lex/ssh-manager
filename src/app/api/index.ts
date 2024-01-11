@@ -86,10 +86,24 @@ const deleteConfig = async (host: string) => {
 	return await getListOfConfigs();
 };
 
-const createConfig = async (newConfig: Record<string, any>) => {
+const createConfig = async (newConfigs: Record<string, any>[]) => {
 	const config = await parseConfig();
-	config.prepend(newConfig);
+	config.unshift(...newConfigs);
 	await writeFile('config', SSHConfig.stringify(config));
+};
+
+const createConfigFromString = async (newConfig: string) => {
+	const parsedConfig = SSHConfig.parse(newConfig.trim() + '\n\n');
+	await createConfig(parsedConfig);
+};
+
+const getConfigFileTxt = async () => {
+	try {
+		return await getFile('config');
+	} catch (e) {
+		await createFile('config');
+	}
+	return await getFile('config');
 };
 
 export default {
@@ -97,4 +111,6 @@ export default {
 	getConfigByHost,
 	deleteConfig,
 	createConfig,
+	createConfigFromString,
+	getConfigFileTxt,
 };
