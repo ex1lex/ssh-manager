@@ -1,17 +1,18 @@
 import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
-import { TConfig } from '@shared/types';
 import ConfigPageContainer from '@widgets/config-page-container';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
 const ConfigPage: FC = () => {
-	const [config, setConfig] = useState<TConfig | undefined>();
 	const navigate = useNavigate();
 	const { configId } = useParams();
-	const { getConfig } = useConfig();
+	const {
+		state: { config },
+		getConfig,
+	} = useConfig();
 
 	const values = useMemo(() => {
 		return Object.keys(config || {}).map((key) => {
@@ -23,9 +24,7 @@ const ConfigPage: FC = () => {
 	}, [config]);
 
 	useEffect(() => {
-		getConfig(configId)
-			.then((res) => setConfig(res))
-			.catch(() => navigate(ROUTES.ROOT));
+		getConfig(configId).catch(() => navigate(ROUTES.ROOT));
 	}, [configId]);
 
 	if (!config) {

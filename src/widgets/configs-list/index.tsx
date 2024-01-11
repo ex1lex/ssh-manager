@@ -1,14 +1,18 @@
 import { useConfig } from '@shared/hooks';
 import DeleteIcon from '@widgets/delete-icon';
 import EditIcon from '@widgets/edit-icon';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import styles from './styles.module.scss';
 
 const ConfigsList: FC = () => {
-	const { configs, onDelete } = useConfig();
+	const {
+		state: { configs },
+		onDelete,
+		getConfigs,
+	} = useConfig();
 
 	const onDeleteConfigClick = async (val: string) => {
 		onDelete(val).then(() => toast('Config deleted'));
@@ -17,6 +21,10 @@ const ConfigsList: FC = () => {
 	const onEditConfigClick = (val: string) => {
 		console.log('EDIT', val);
 	};
+
+	useEffect(() => {
+		getConfigs();
+	}, []);
 
 	return (
 		<div className={styles['configs-list']}>

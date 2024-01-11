@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useConfig } from '@shared/hooks';
 import ConfigPageContainer from '@widgets/config-page-container';
 import CustomButton from '@widgets/custom-button';
 import CustomInput from '@widgets/custom-input';
@@ -10,11 +11,13 @@ import styles from './styles.module.scss';
 
 const schema = yup
 	.object({
-		textarea: yup.string().required('This field is required'),
+		config: yup.string().required('This field is required'),
 	})
 	.required();
 
 const NewConfigPage: FC = () => {
+	const { createConfig } = useConfig();
+
 	const {
 		register,
 		handleSubmit,
@@ -23,12 +26,8 @@ const NewConfigPage: FC = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const onSubmit = handleSubmit((data) => {
-		console.log('VALUES:', data);
-		// createConfig({
-		// 	Host: 'yandex',
-		// 	HostName: 'ya.ru',
-		// });
+	const onSubmit = handleSubmit(({ config }) => {
+		createConfig(config);
 	});
 
 	return (
@@ -36,9 +35,9 @@ const NewConfigPage: FC = () => {
 			<div className={styles['new-config-page']}>
 				<form onSubmit={onSubmit} className={styles['new-config-page__form']}>
 					<CustomInput
-						formProps={register('textarea')}
+						formProps={register('config')}
 						label="Enter your config:"
-						errorMessage={errors?.textarea?.message}
+						errorMessage={errors?.config?.message}
 						variant="textarea"
 					/>
 					<CustomButton title="Create config" type="submit" />
