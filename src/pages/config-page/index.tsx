@@ -10,8 +10,8 @@ const ConfigPage: FC = () => {
 	const navigate = useNavigate();
 	const { configId } = useParams();
 	const {
-		state: { config },
 		getConfig,
+		state: { config },
 	} = useConfig();
 
 	const values = useMemo(() => {
@@ -24,10 +24,11 @@ const ConfigPage: FC = () => {
 	}, [config]);
 
 	useEffect(() => {
-		getConfig(configId).catch(() => navigate(ROUTES.ROOT));
+		getConfig(configId);
 	}, [configId]);
 
 	if (!config) {
+		navigate(ROUTES.ROOT);
 		return null;
 	}
 

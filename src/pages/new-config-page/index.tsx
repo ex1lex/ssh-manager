@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
 import ConfigPageContainer from '@widgets/config-page-container';
 import CustomButton from '@widgets/custom-button';
 import CustomInput from '@widgets/custom-input';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import styles from './styles.module.scss';
@@ -16,6 +18,7 @@ const schema = yup
 	.required();
 
 const NewConfigPage: FC = () => {
+	const navigate = useNavigate();
 	const { createConfig } = useConfig();
 
 	const {
@@ -30,7 +33,7 @@ const NewConfigPage: FC = () => {
 	});
 
 	const onSubmit = handleSubmit(({ config }) => {
-		createConfig(config);
+		createConfig(config).then(() => navigate(ROUTES.ROOT));
 	});
 
 	return (
