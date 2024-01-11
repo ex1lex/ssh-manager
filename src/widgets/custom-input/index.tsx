@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 interface Props {
 	label?: string;
 	errorMessage?: string;
-	cols?: number;
+	rows?: number;
 	variant?: 'input' | 'textarea';
 	formProps?: Record<string, any>;
 }
@@ -16,7 +16,7 @@ const CustomInput: FC<Props> = ({
 	variant = 'input',
 	errorMessage,
 	formProps,
-	cols = 5,
+	rows = 5,
 }) => {
 	const id = useId();
 
@@ -31,7 +31,7 @@ const CustomInput: FC<Props> = ({
 		};
 		switch (variant) {
 			case 'textarea':
-				_props['cols'] = cols;
+				_props['rows'] = rows;
 				return <textarea {..._props} />;
 			case 'input':
 			default:
