@@ -1,3 +1,4 @@
+import { TConfig } from '@shared/types';
 import { contextBridge } from 'electron';
 
 import api from '../api';
@@ -5,10 +6,10 @@ import api from '../api';
 declare global {
 	interface Window {
 		electron: {
-			getListOfConfigs: () => Promise<Record<string, any>[]>;
-			getConfigByHost: (host: string) => Promise<Record<string, any>>;
-			deleteConfig: (host: string) => Promise<void>;
-			createConfig: (newConfig: Record<string, any>) => Promise<void>;
+			getListOfConfigs: () => Promise<TConfig[]>;
+			getConfigByHost: (host: string) => Promise<TConfig>;
+			deleteConfig: (host: string) => Promise<TConfig[]>;
+			createConfig: (newConfig: TConfig) => Promise<void>;
 			createConfigFromString: (newConfig: string) => Promise<void>;
 			getConfigFileTxt: (fileName: string) => Promise<string>;
 		};

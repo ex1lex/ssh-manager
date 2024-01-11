@@ -1,42 +1,81 @@
+import { useAppDispatch } from '@app/redux';
+import {
+	getConfigSelector,
+	getConfigsSelector,
+	getTxtConfigSelector,
+	setConfig,
+	setConfigs,
+	setTxtConfig,
+} from '@app/redux/slices/configs';
 import { TConfig } from '@shared/types';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const useConfig = () => {
-	const [configs, setConfigs] = useState<TConfig[]>([]);
-	const [config, setConfig] = useState<TConfig | undefined>();
-	const [txtConfig, setTxtConfig] = useState<string | undefined>();
+	const dispatch = useAppDispatch();
+	const configs = getConfigsSelector();
+	const config = getConfigSelector();
+	const txtConfig = getTxtConfigSelector();
 
-	const getConfigs = async () => {
-		const _configs: any = await window.electron.getListOfConfigs();
-		setConfigs(_configs);
+	const _setConfigs = (_newConfigs: TConfig[]) => {
+		dispatch(setConfigs(_newConfigs));
 	};
 
-	const getConfig = async (val: string) => {
-		const _config = await window.electron.getConfigByHost(val);
-		setConfig(_config);
+	const _setConfig = (_newConfig: TConfig) => {
+		dispatch(setConfig(_newConfig));
 	};
 
-	const onDelete = async (val: string) => {
-		const _configs: any = await window.electron.deleteConfig(val);
-		toast('Config deleted');
-		setConfigs(_configs);
+	const _setTxtConfig = (_newConfig: string) => {
+		dispatch(setTxtConfig(_newConfig));
 	};
 
-	const onRefresh = async () => {
-		await getConfigs();
+	const getConfigs = () => {
+		window.electron
+			.getListOfConfigs()
+			.then((_configs) => _setConfigs(_configs));
 	};
 
-	const createConfig = async (newConfig: string) => {
-		await window.electron
+	const getConfig = (host: string) => {
+		const findedConfig = configs.find(
+			(_config) => _config?.Host === host || _config?.HostName === host
+		);
+		_setConfig(findedConfig);
+	};
+
+	const deleteConfig = (host: string) => {
+		window.electron
+			.deleteConfig(host)
+			.then((_configs) => {
+				_setConfigs(_configs);
+				if (config) {
+					const isEqual = host === config?.Host || host === config?.HostName;
+					if (isEqual) {
+						_setConfig(undefined);
+					}
+				}
+			})
+			.then(() => toast('Config deleted'));
+	};
+
+	const refreshConfigs = () => getConfigs();
+
+	const createConfig = (newConfig: string) => {
+		return window.electron
 			.createConfigFromString(newConfig)
-			.catch((e) => toast.error(e.message));
-		getConfigs();
+			.then(() => {
+				getConfigs();
+			})
+			.then(() => {
+				toast('Config created');
+			})
+			.catch((e) => {
+				toast.error(e.message);
+			});
 	};
 
-	const getTxtConfig = async () => {
-		const draftConfig = await window.electron.getConfigFileTxt('config');
-		setTxtConfig(draftConfig);
+	const getTxtConfig = () => {
+		window.electron
+			.getConfigFileTxt('config')
+			.then((_txtConfig) => setTxtConfig(_txtConfig));
 	};
 
 	return {
@@ -46,10 +85,10 @@ export const useConfig = () => {
 			txtConfig,
 		},
 		getConfigs,
-		onDelete,
-		onRefresh,
 		getConfig,
-		createConfig,
 		getTxtConfig,
+		createConfig,
+		deleteConfig,
+		refreshConfigs,
 	};
 };
