@@ -1,5 +1,6 @@
 export const ROUTES = {
 	ROOT: '/',
-	CONFIG: '/:configId',
+	CONFIG: '/config/:configId',
 	NEW_CONFIG: '/new',
+	TXT_CONFIG: '/txt',
 };
