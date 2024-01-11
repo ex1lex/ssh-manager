@@ -24,6 +24,9 @@ const NewConfigPage: FC = () => {
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
+		defaultValues: {
+			config: 'Host ness\n  HostName lochness.com\n  User dinosaur',
+		},
 	});
 
 	const onSubmit = handleSubmit(({ config }) => {
