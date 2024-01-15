@@ -58,6 +58,7 @@
 		background: none;
 
 		&:hover {
+			color: var(--bs-link-hover-color);
 			opacity: $hoverOpacity;
 		}
 	}

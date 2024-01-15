@@ -16,17 +16,21 @@ const CustomInput: FC<Props> = ({
 	variant = 'input',
 	errorMessage,
 	formProps,
-	rows = 5,
+	rows,
 }) => {
 	const id = useId();
 
 	const Component = useCallback(() => {
 		const _props: Record<string, any> = {
 			...formProps,
-			className: classNames(styles['custom-input__input'], {
-				[styles['custom-input__input_type_error']]: !!errorMessage,
-				[styles['custom-input__input_type_disabled']]: !!formProps?.disabled,
-			}),
+			className: classNames(
+				formProps?.className,
+				styles['custom-input__input'],
+				{
+					[styles['custom-input__input_type_error']]: !!errorMessage,
+					[styles['custom-input__input_type_disabled']]: !!formProps?.disabled,
+				}
+			),
 			id,
 		};
 		switch (variant) {

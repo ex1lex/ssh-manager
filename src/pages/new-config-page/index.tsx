@@ -41,6 +41,7 @@ const NewConfigPage: FC = () => {
 			<div className={styles['new-config-page']}>
 				<form onSubmit={onSubmit} className={styles['new-config-page__form']}>
 					<CustomInput
+						rows={5}
 						formProps={register('config')}
 						label="Enter your config:"
 						errorMessage={errors?.config?.message}

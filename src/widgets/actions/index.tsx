@@ -24,20 +24,16 @@ const Actions: FC = () => {
 	return (
 		<div className={styles.actions}>
 			<CustomButton
-				variant="outlined"
+				outline
 				title={<PlusIcon />}
 				onClick={onCreateNewConfigClick}
 			/>
 			<CustomButton
-				variant="outlined"
+				outline
 				title={<FileIcon />}
 				onClick={onShowTxtConfigClick}
 			/>
-			<CustomButton
-				variant="outlined"
-				title={<RefreshIcon />}
-				onClick={refreshConfigs}
-			/>
+			<CustomButton outline title={<RefreshIcon />} onClick={refreshConfigs} />
 		</div>
 	);
 };
