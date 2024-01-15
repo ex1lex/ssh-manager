@@ -78,6 +78,16 @@ export const useConfig = () => {
 		});
 	};
 
+	const editTxtConfig = (fileContent: string) => {
+		return window.electron
+			.editTxtConfig(fileContent)
+			.then(({ txt, list }) => {
+				_setTxtConfig(txt);
+				_setConfigs(list);
+			})
+			.then(() => toast('Config has been changed'));
+	};
+
 	return {
 		state: {
 			configs,
@@ -87,6 +97,7 @@ export const useConfig = () => {
 		getConfigs,
 		getConfig,
 		getTxtConfig,
+		editTxtConfig,
 		createConfig,
 		deleteConfig,
 		refreshConfigs,
