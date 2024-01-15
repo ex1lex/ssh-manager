@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
+import { TFile } from '@shared/types';
 import ConfigPageContainer from '@widgets/config-page-container';
 import CustomButton from '@widgets/custom-button';
+import CustomDropzone from '@widgets/custom-dropzone';
 import CustomInput from '@widgets/custom-input';
-import React, { FC } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
@@ -18,12 +20,14 @@ const schema = yup
 	.required();
 
 const NewConfigPage: FC = () => {
+	const [file, setFile] = useState<TFile | undefined>(undefined);
 	const navigate = useNavigate();
 	const { createConfig } = useConfig();
 
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
@@ -33,8 +37,16 @@ const NewConfigPage: FC = () => {
 	});
 
 	const onSubmit = handleSubmit(({ config }) => {
-		createConfig(config).then(() => navigate(ROUTES.ROOT));
+		createConfig(config, file).then(() => navigate(ROUTES.ROOT));
 	});
+
+	const onRemoveFile = useCallback(() => {
+		setFile(undefined);
+	}, [setValue]);
+
+	const onLoadFile = (obj: TFile) => {
+		setFile(obj);
+	};
 
 	return (
 		<ConfigPageContainer title="Create new config">
@@ -46,6 +58,11 @@ const NewConfigPage: FC = () => {
 						label="Enter your config:"
 						errorMessage={errors?.config?.message}
 						variant="textarea"
+					/>
+					<CustomDropzone
+						fileName={file?.name}
+						onLoadFile={onLoadFile}
+						onRemoveFile={onRemoveFile}
 					/>
 					<CustomButton title="Create config" type="submit" />
 				</form>
