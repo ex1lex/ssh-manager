@@ -7,7 +7,7 @@ import {
 	setConfigs,
 	setTxtConfig,
 } from '@app/redux/slices/configs';
-import { TConfig } from '@shared/types';
+import { TConfig, TFile } from '@shared/types';
 import { toast } from 'react-toastify';
 
 export const useConfig = () => {
@@ -44,8 +44,9 @@ export const useConfig = () => {
 	const deleteConfig = (host: string) => {
 		window.electron
 			.deleteConfig(host)
-			.then((_configs) => {
-				_setConfigs(_configs);
+			.then(({ list, txt }) => {
+				_setConfigs(list);
+				_setTxtConfig(txt);
 				if (config) {
 					const isEqual = host === config?.Host || host === config?.HostName;
 					if (isEqual) {
@@ -58,9 +59,9 @@ export const useConfig = () => {
 
 	const refreshConfigs = () => getConfigs();
 
-	const createConfig = (newConfig: string) => {
+	const createConfig = (newConfig: string, file?: TFile) => {
 		return window.electron
-			.createConfigFromString(newConfig)
+			.createConfigFromString(newConfig, file)
 			.then(() => {
 				getConfigs();
 			})
