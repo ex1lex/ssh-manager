@@ -1,3 +1,5 @@
+import { TFile } from '@shared/types';
+
 const SSHConfig = window.require('ssh-config');
 
 const path = window.require('node:path');
@@ -22,7 +24,11 @@ const getFile = async (fileName: string): Promise<string> => {
 	});
 };
 
-const createFile = async (fileName: string, type = '', data = '') => {
+const createFile = async (
+	fileName: string,
+	type = '',
+	data: string | ArrayBuffer = ''
+) => {
 	const result = await new Promise((res) => {
 		fs.writeFile(
 			preparePath(`${fileName}${type ? `.${type}` : ''}`),
@@ -91,7 +97,10 @@ const deleteConfig = async (host: string) => {
 		(item: any) => item?.value?.toString() !== host
 	);
 	await writeFile(defaultConfigName, SSHConfig.stringify(modConfig));
-	return await getListOfConfigs();
+	return {
+		list: await getListOfConfigs(),
+		txt: await getTxtConfig(),
+	};
 };
 
 const createConfig = async (newConfigs: Record<string, any>[]) => {
@@ -100,8 +109,14 @@ const createConfig = async (newConfigs: Record<string, any>[]) => {
 	await writeFile(defaultConfigName, SSHConfig.stringify(config));
 };
 
-const createConfigFromString = async (newConfig: string) => {
-	const parsedConfig = SSHConfig.parse(newConfig.trim() + '\n\n');
+const createConfigFromString = async (newConfig: string, file?: TFile) => {
+	let trimConfig: string = newConfig.trim();
+	if (file) {
+		const buffer = new Uint8Array(file.binary as ArrayBuffer);
+		await createFile(file.name, '', buffer);
+		trimConfig += '\n' + 'IdentityFile ' + preparePath(file.name);
+	}
+	const parsedConfig = SSHConfig.parse(trimConfig + '\n\n');
 	await createConfig(parsedConfig);
 };
 
