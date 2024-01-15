@@ -1,31 +1,36 @@
-import classNames from 'classnames';
 import React, { FC } from 'react';
-
-import styles from './styles.module.scss';
+import { Button } from 'reactstrap';
 
 interface Props {
 	title: string | React.ReactElement;
 	type?: 'button' | 'submit' | 'reset';
 	onClick?: () => void;
-	variant?: 'outlined' | 'contained';
+	color?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'link';
+	outline?: boolean;
+	size?: 'sm' | 'lg';
+	className?: string;
 }
 
 const CustomButton: FC<Props> = ({
-	type = 'button',
 	title,
 	onClick,
-	variant = 'contained',
+	type = 'button',
+	color = 'primary',
+	outline = false,
+	size = 'sm',
+	className,
 }) => {
 	return (
-		<button
-			className={classNames(styles[`custom-button`], {
-				[styles[`custom-button_variant_${variant}`]]: variant,
-			})}
+		<Button
+			size={size}
 			type={type}
 			onClick={onClick}
+			color={color}
+			outline={outline}
+			className={className}
 		>
 			{title}
-		</button>
+		</Button>
 	);
 };
 
