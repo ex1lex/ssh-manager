@@ -12,6 +12,10 @@ declare global {
 			createConfig: (newConfig: TConfig) => Promise<void>;
 			createConfigFromString: (newConfig: string) => Promise<void>;
 			getTxtConfig: () => Promise<string>;
+			editTxtConfig: (fileContent: string) => Promise<{
+				list: any[];
+				txt: string;
+			}>;
 		};
 	}
 }

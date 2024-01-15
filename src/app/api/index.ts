@@ -117,6 +117,15 @@ const getTxtConfig = async () => {
 	return await getFile(defaultConfigName);
 };
 
+const editTxtConfig = async (fileContent: string) => {
+	await checkAndCreateConfig(defaultConfigName);
+	await writeFile(defaultConfigName, fileContent);
+	return {
+		list: await getListOfConfigs(),
+		txt: fileContent,
+	};
+};
+
 export default {
 	getListOfConfigs,
 	getConfigByHost,
@@ -124,4 +133,5 @@ export default {
 	createConfig,
 	createConfigFromString,
 	getTxtConfig,
+	editTxtConfig,
 };
