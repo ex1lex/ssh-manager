@@ -1,8 +1,8 @@
 import { TFile } from '@shared/types';
 import CustomButton from '@widgets/custom-button';
-import Tooltip from '@widgets/tooltip';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Tooltip } from 'react-tooltip';
 
 import {
 	StyledDropzone,
@@ -21,9 +21,6 @@ interface Props {
 }
 
 const CustomDropzone: FC<Props> = ({ fileName, onLoadFile, onRemoveFile }) => {
-	const [tooltipOpen, setTooltipOpen] = useState(false);
-	const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
-
 	const onDrop = useCallback((acceptedFiles: any) => {
 		acceptedFiles.forEach((file: any) => {
 			const reader = new FileReader();
@@ -53,13 +50,15 @@ const CustomDropzone: FC<Props> = ({ fileName, onLoadFile, onRemoveFile }) => {
 	return (
 		<StyledDropzone>
 			<Tooltip
-				isOpen={tooltipOpen}
-				toggle={toggleTooltip}
-				text={
+				id="tooltip-dropzone"
+				place="top"
+				content={
 					'The uploaded file is automatically inserted into the config in the "IdentityFile" key'
 				}
 			/>
-			<StyledDropzoneLabel id="tooltip-dropzone">Key file:</StyledDropzoneLabel>
+			<StyledDropzoneLabel data-tooltip-id="tooltip-dropzone">
+				Key file:
+			</StyledDropzoneLabel>
 			<StyledDropzoneContainer {...getRootProps()}>
 				<input {...getInputProps()} />
 				<StyledDropzoneTitle>
