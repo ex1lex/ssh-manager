@@ -1,12 +1,12 @@
 import ConfigPageContainer from '@widgets/config-page-container';
 import React, { FC } from 'react';
 
-import styles from './styles.module.scss';
+import { StyledPlaceholder } from './styles';
 
 const ConfigPlaceholderPage: FC = () => {
 	return (
 		<ConfigPageContainer>
-			<p className={styles['config-placeholder-page']} />
+			<StyledPlaceholder />
 		</ConfigPageContainer>
 	);
 };

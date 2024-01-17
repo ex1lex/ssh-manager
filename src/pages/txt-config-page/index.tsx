@@ -1,3 +1,4 @@
+import { Theme } from '@app/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useConfig } from '@shared/hooks';
 import ConfigPageContainer from '@widgets/config-page-container';
@@ -7,7 +8,12 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import styles from './styles.module.scss';
+import {
+	StyledTxtConfigPage,
+	StyledTxtConfigPageContainer,
+	StyledTxtConfigPageForm,
+	StyledTxtConfigPageText,
+} from './styles';
 
 const schema = yup
 	.object({
@@ -59,44 +65,53 @@ const TxtConfigPage: FC = () => {
 	}, []);
 
 	if (isEditMode) {
+		const current = txtRef.current;
+
 		return (
 			<ConfigPageContainer showHeader title="Contents of the config file">
-				<div className={styles['txt-config-page']}>
-					<form onSubmit={onSubmit} className={styles['txt-config-page__form']}>
+				<StyledTxtConfigPage>
+					<StyledTxtConfigPageForm onSubmit={onSubmit}>
 						<CustomInput
 							formProps={{
 								...register('config'),
-								className: styles['txt-config-page__textarea'],
 								style: {
-									height: `${txtRef.current?.scrollHeight + 30}px`,
+									height: `${current.scrollHeight + 30}px`,
+									color: Theme.colors.text,
+									fontStyle: 'normal',
+									fontSize: '16px',
+									fontWeight: 'normal',
+									lineHeight: '24px',
 								},
 							}}
 							errorMessage={errors?.config?.message}
 							variant="textarea"
 						/>
-						<div className={styles['txt-config-page__container']}>
+						<StyledTxtConfigPageContainer>
 							<CustomButton
 								color="danger"
-								title="Cancel"
 								type="button"
 								onClick={toggleEditMode}
-							/>
-							<CustomButton title="Save config" type="submit" />
-						</div>
-					</form>
-				</div>
+							>
+								Cancel
+							</CustomButton>
+							<CustomButton type="submit">Save config</CustomButton>
+						</StyledTxtConfigPageContainer>
+					</StyledTxtConfigPageForm>
+				</StyledTxtConfigPage>
 			</ConfigPageContainer>
 		);
 	}
 
 	return (
 		<ConfigPageContainer showHeader title="Contents of the config file">
-			<div className={styles['txt-config-page']}>
-				<p ref={txtRef} className={styles['txt-config-page__text']}>
+			<StyledTxtConfigPage>
+				<StyledTxtConfigPageText ref={txtRef}>
 					{txtConfig}
-				</p>
-				<CustomButton title="Edit" type="button" onClick={onEditClick} />
-			</div>
+				</StyledTxtConfigPageText>
+				<CustomButton type="button" onClick={onEditClick}>
+					Edit
+				</CustomButton>
+			</StyledTxtConfigPage>
 		</ConfigPageContainer>
 	);
 };

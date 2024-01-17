@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
-import styles from './styles.module.scss';
+import { StyledNewConfigPage, StyledNewConfigPageForm } from './styles';
 
 const schema = yup
 	.object({
@@ -50,8 +50,8 @@ const NewConfigPage: FC = () => {
 
 	return (
 		<ConfigPageContainer title="Create new config">
-			<div className={styles['new-config-page']}>
-				<form onSubmit={onSubmit} className={styles['new-config-page__form']}>
+			<StyledNewConfigPage>
+				<StyledNewConfigPageForm onSubmit={onSubmit}>
 					<CustomInput
 						rows={5}
 						formProps={register('config')}
@@ -64,9 +64,9 @@ const NewConfigPage: FC = () => {
 						onLoadFile={onLoadFile}
 						onRemoveFile={onRemoveFile}
 					/>
-					<CustomButton title="Create config" type="submit" />
-				</form>
-			</div>
+					<CustomButton type="submit">Create config</CustomButton>
+				</StyledNewConfigPageForm>
+			</StyledNewConfigPage>
 		</ConfigPageContainer>
 	);
 };

@@ -2,16 +2,16 @@ import Sidebar from '@widgets/sidebar';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import styles from './styles.module.scss';
+import { StyledConfigLayout, StyledConfigLayoutContent } from './styles';
 
 const ConfigLayout: FC = () => {
 	return (
-		<div className={styles['config-layout']}>
+		<StyledConfigLayout>
 			<Sidebar />
-			<div className={styles['config-layout__content']}>
+			<StyledConfigLayoutContent>
 				<Outlet />
-			</div>
-		</div>
+			</StyledConfigLayoutContent>
+		</StyledConfigLayout>
 	);
 };
 

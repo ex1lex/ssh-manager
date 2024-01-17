@@ -4,7 +4,12 @@ import ConfigPageContainer from '@widgets/config-page-container';
 import React, { FC, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import styles from './styles.module.scss';
+import {
+	StyledConfigPage,
+	StyledConfigPageItem,
+	StyledConfigPageKey,
+	StyledConfigPageValue,
+} from './styles';
 
 const ConfigPage: FC = () => {
 	const navigate = useNavigate();
@@ -34,25 +39,20 @@ const ConfigPage: FC = () => {
 
 	return (
 		<ConfigPageContainer showHeader title={`Config ${config.Host}`}>
-			<ul className={styles['config-page']}>
+			<StyledConfigPage>
 				{values.map((item: any) => {
 					if (!item?.param) return null;
 
 					return (
-						<li
-							key={`config-page-item-${item.param}`}
-							className={styles['config-page__item']}
-						>
-							<p className={styles['config-page__key']}>
+						<StyledConfigPageItem key={`config-page-item-${item.param}`}>
+							<StyledConfigPageKey>
 								{item.param}:
-								<span className={styles['config-page__value']}>
-									{item.value}
-								</span>
-							</p>
-						</li>
+								<StyledConfigPageValue>{item.value}</StyledConfigPageValue>
+							</StyledConfigPageKey>
+						</StyledConfigPageItem>
 					);
 				})}
-			</ul>
+			</StyledConfigPage>
 		</ConfigPageContainer>
 	);
 };
