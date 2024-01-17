@@ -1,7 +1,12 @@
 import ConfigPageHeader from '@widgets/config-page-header';
 import React, { FC } from 'react';
 
-import styles from './styles.module.scss';
+import {
+	StyledConfigPageContainer,
+	StyledConfigPageContainerContainer,
+	StyledConfigPageContainerContent,
+	StyledConfigPageContainerTitle,
+} from './styles';
 
 interface Props {
 	children: React.ReactNode;
@@ -11,17 +16,19 @@ interface Props {
 
 const ConfigPageContainer: FC<Props> = ({ children, title, showHeader }) => {
 	return (
-		<div className={styles['config-page-container']}>
+		<StyledConfigPageContainer>
 			{showHeader && <ConfigPageHeader title={title} />}
-			<div className={styles['config-page-container__container']}>
+			<StyledConfigPageContainerContainer>
 				{!showHeader && title && (
-					<h4 className={styles['config-page-container__title']}>{title}</h4>
+					<StyledConfigPageContainerTitle>
+						{title}
+					</StyledConfigPageContainerTitle>
 				)}
-				<div className={styles['config-page-container__content']}>
+				<StyledConfigPageContainerContent>
 					{children}
-				</div>
-			</div>
-		</div>
+				</StyledConfigPageContainerContent>
+			</StyledConfigPageContainerContainer>
+		</StyledConfigPageContainer>
 	);
 };
 

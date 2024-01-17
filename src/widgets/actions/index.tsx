@@ -7,7 +7,7 @@ import RefreshIcon from '@widgets/refresh-icon';
 import React, { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './styles.module.scss';
+import { StyledActions } from './styles';
 
 const Actions: FC = () => {
 	const navigate = useNavigate();
@@ -22,19 +22,25 @@ const Actions: FC = () => {
 	}, [navigate]);
 
 	return (
-		<div className={styles.actions}>
+		<StyledActions>
 			<CustomButton
-				outline
-				title={<PlusIcon />}
+				variant="outline"
+				color="primary"
 				onClick={onCreateNewConfigClick}
-			/>
+			>
+				<PlusIcon />
+			</CustomButton>
 			<CustomButton
-				outline
-				title={<FileIcon />}
+				variant="outline"
+				color="primary"
 				onClick={onShowTxtConfigClick}
-			/>
-			<CustomButton outline title={<RefreshIcon />} onClick={refreshConfigs} />
-		</div>
+			>
+				<FileIcon />
+			</CustomButton>
+			<CustomButton variant="outline" color="primary" onClick={refreshConfigs}>
+				<RefreshIcon />
+			</CustomButton>
+		</StyledActions>
 	);
 };
 

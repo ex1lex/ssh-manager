@@ -1,36 +1,34 @@
 import React, { FC } from 'react';
-import { Button } from 'reactstrap';
+
+import { StyledCustomButton } from './styles';
 
 interface Props {
-	title: string | React.ReactElement;
-	type?: 'button' | 'submit' | 'reset';
+	children: string | React.ReactElement;
 	onClick?: () => void;
-	color?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'link';
-	outline?: boolean;
-	size?: 'sm' | 'lg';
+	type?: 'button' | 'submit' | 'reset';
+	variant?: 'outline' | 'fill' | 'simple';
+	color?: 'primary' | 'danger' | 'currentColor';
 	className?: string;
 }
 
 const CustomButton: FC<Props> = ({
-	title,
+	children,
 	onClick,
 	type = 'button',
+	variant = 'fill',
 	color = 'primary',
-	outline = false,
-	size = 'sm',
 	className,
 }) => {
 	return (
-		<Button
-			size={size}
+		<StyledCustomButton
 			type={type}
 			onClick={onClick}
-			color={color}
-			outline={outline}
 			className={className}
+			$color={color}
+			$variant={variant}
 		>
-			{title}
-		</Button>
+			{children}
+		</StyledCustomButton>
 	);
 };
 

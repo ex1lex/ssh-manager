@@ -2,16 +2,16 @@ import Actions from '@widgets/actions';
 import ConfigsList from '@widgets/configs-list';
 import React, { FC } from 'react';
 
-import styles from './styles.module.scss';
+import { StyledSidebar, StyledSidebarContainer } from './styles';
 
 const Sidebar: FC = () => {
 	return (
-		<div className={styles.sidebar}>
+		<StyledSidebar>
 			<Actions />
-			<div className={styles['sidebar__container']}>
+			<StyledSidebarContainer>
 				<ConfigsList />
-			</div>
-		</div>
+			</StyledSidebarContainer>
+		</StyledSidebar>
 	);
 };
 

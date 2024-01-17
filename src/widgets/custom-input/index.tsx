@@ -1,7 +1,12 @@
-import classNames from 'classnames';
 import React, { FC, useCallback, useId } from 'react';
 
-import styles from './styles.module.scss';
+import {
+	StyledCustomInput,
+	StyledCustomInputError,
+	StyledCustomInputInput,
+	StyledCustomInputLabel,
+	StyledCustomInputTextarea,
+} from './styles';
 
 interface Props {
 	label?: string;
@@ -23,40 +28,30 @@ const CustomInput: FC<Props> = ({
 	const Component = useCallback(() => {
 		const _props: Record<string, any> = {
 			...formProps,
-			className: classNames(
-				formProps?.className,
-				styles['custom-input__input'],
-				{
-					[styles['custom-input__input_type_error']]: !!errorMessage,
-					[styles['custom-input__input_type_disabled']]: !!formProps?.disabled,
-				}
-			),
 			id,
 		};
 		switch (variant) {
 			case 'textarea':
 				_props['rows'] = rows;
-				return <textarea {..._props} />;
+				return <StyledCustomInputTextarea {..._props} />;
 			case 'input':
 			default:
-				return <input {..._props} />;
+				return <StyledCustomInputInput {..._props} />;
 		}
 	}, [variant]);
 
 	return (
-		<div className={styles['custom-input']}>
+		<StyledCustomInput>
 			{label && (
-				<label className={styles['custom-input__label']} htmlFor={id}>
-					{label}
-				</label>
+				<StyledCustomInputLabel htmlFor={id}>{label}</StyledCustomInputLabel>
 			)}
 			<Component />
 			{errorMessage && (
-				<p className={styles['custom-input__error']} role="alert">
+				<StyledCustomInputError role="alert">
 					{errorMessage}
-				</p>
+				</StyledCustomInputError>
 			)}
-		</div>
+		</StyledCustomInput>
 	);
 };
 

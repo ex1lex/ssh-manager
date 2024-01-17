@@ -3,9 +3,15 @@ import { useConfig } from '@shared/hooks';
 import DeleteIcon from '@widgets/delete-icon';
 import EditIcon from '@widgets/edit-icon';
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-import styles from './styles.module.scss';
+import {
+	StyledConfigList,
+	StyledConfigListActions,
+	StyledConfigListItem,
+	StyledConfigListLink,
+	StyledConfigListList,
+	StyledCustomButton,
+} from './styles';
 
 const ConfigsList: FC = () => {
 	const {
@@ -27,8 +33,8 @@ const ConfigsList: FC = () => {
 	}, []);
 
 	return (
-		<div className={styles['configs-list']}>
-			<ul className={styles['configs-list__list']}>
+		<StyledConfigList>
+			<StyledConfigListList>
 				{configs?.map((_value: any) => {
 					const value = _value?.Host;
 					if (!value) {
@@ -36,34 +42,29 @@ const ConfigsList: FC = () => {
 					}
 					const link = ROUTES.CONFIG.replace(':configId', value);
 					return (
-						<li
-							key={`configs-list-item-${value}`}
-							className={styles['configs-list__item']}
-						>
-							<Link to={link} className={styles['configs-list__link']}>
-								{value}
-							</Link>
-							<div className={styles['configs-list__actions']}>
-								<button
+						<StyledConfigListItem key={`configs-list-item-${value}`}>
+							<StyledConfigListLink to={link}>{value}</StyledConfigListLink>
+							<StyledConfigListActions>
+								<StyledCustomButton
+									variant="simple"
+									color="currentColor"
 									onClick={() => onEditConfigClick(value)}
-									type="button"
-									className={styles['configs-list__btn']}
 								>
 									<EditIcon />
-								</button>
-								<button
+								</StyledCustomButton>
+								<StyledCustomButton
+									variant="simple"
+									color="currentColor"
 									onClick={() => onDeleteConfigClick(value)}
-									type="button"
-									className={styles['configs-list__btn']}
 								>
 									<DeleteIcon />
-								</button>
-							</div>
-						</li>
+								</StyledCustomButton>
+							</StyledConfigListActions>
+						</StyledConfigListItem>
 					);
 				})}
-			</ul>
-		</div>
+			</StyledConfigListList>
+		</StyledConfigList>
 	);
 };
 

@@ -1,7 +1,6 @@
-import { useConfig } from '@shared/hooks';
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 
-import styles from './styles.module.scss';
+import { StyledConfigPageHeader, StyledConfigPageHeaderTitle } from './styles';
 
 interface Props {
 	title?: string;
@@ -9,9 +8,9 @@ interface Props {
 
 const ConfigPageHeader: FC<Props> = ({ title }) => {
 	return (
-		<header className={styles['config-page-header']}>
-			<p className={styles['config-page-header__title']}>{title}</p>
-		</header>
+		<StyledConfigPageHeader>
+			<StyledConfigPageHeaderTitle>{title}</StyledConfigPageHeaderTitle>
+		</StyledConfigPageHeader>
 	);
 };
 

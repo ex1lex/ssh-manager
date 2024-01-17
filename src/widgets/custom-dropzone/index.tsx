@@ -1,10 +1,17 @@
 import { TFile } from '@shared/types';
 import CustomButton from '@widgets/custom-button';
+import Tooltip from '@widgets/tooltip';
 import React, { FC, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Tooltip } from 'reactstrap';
 
-import styles from './styles.module.scss';
+import {
+	StyledDropzone,
+	StyledDropzoneContainer,
+	StyledDropzoneFileContainer,
+	StyledDropzoneFileName,
+	StyledDropzoneLabel,
+	StyledDropzoneTitle,
+} from './styles';
 
 interface Props {
 	label?: string;
@@ -44,36 +51,35 @@ const CustomDropzone: FC<Props> = ({ fileName, onLoadFile, onRemoveFile }) => {
 	}, []);
 
 	return (
-		<div className={styles['custom-dropzone']}>
+		<StyledDropzone>
 			<Tooltip
-				autohide
 				isOpen={tooltipOpen}
-				target="tooltip-dropzone"
 				toggle={toggleTooltip}
-			>
-				The uploaded file is automatically inserted into the config in the
-				"IdentityFile" key
-			</Tooltip>
-			<p id="tooltip-dropzone" className={styles['custom-dropzone__label']}>
-				Key file:
-			</p>
-			<div className={styles['custom-dropzone__container']} {...getRootProps()}>
+				text={
+					'The uploaded file is automatically inserted into the config in the "IdentityFile" key'
+				}
+			/>
+			<StyledDropzoneLabel id="tooltip-dropzone">Key file:</StyledDropzoneLabel>
+			<StyledDropzoneContainer {...getRootProps()}>
 				<input {...getInputProps()} />
-				<p className={styles['custom-dropzone__title']}>
+				<StyledDropzoneTitle>
 					Drag a file here or click to select a file.
-				</p>
-			</div>
+				</StyledDropzoneTitle>
+			</StyledDropzoneContainer>
 			{fileName && (
-				<div className={styles['custom-dropzone__file-container']}>
-					<p>{fileName}</p>
+				<StyledDropzoneFileContainer>
+					<StyledDropzoneFileName>{fileName}</StyledDropzoneFileName>
 					<CustomButton
+						variant="fill"
+						color="danger"
 						onClick={removeFileClick}
 						type="button"
-						title="Remove"
-					/>
-				</div>
+					>
+						Remove
+					</CustomButton>
+				</StyledDropzoneFileContainer>
 			)}
-		</div>
+		</StyledDropzone>
 	);
 };
 
