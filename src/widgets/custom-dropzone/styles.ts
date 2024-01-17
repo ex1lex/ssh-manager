@@ -19,6 +19,7 @@ export const StyledDropzoneLabel = styled.p`
 	line-height: 16px;
 	box-sizing: border-box;
 	text-decoration: underline;
+	cursor: pointer;
 `;
 
 export const StyledDropzoneContainer = styled.div`
