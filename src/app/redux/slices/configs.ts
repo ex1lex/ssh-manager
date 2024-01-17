@@ -6,13 +6,13 @@ import { useAppSelector } from '..';
 interface IState {
 	configs: TConfig[];
 	config?: TConfig;
-	txtConfig?: string;
+	txtConfigs?: string;
 }
 
 const initialState: IState = {
 	configs: [],
 	config: undefined,
-	txtConfig: undefined,
+	txtConfigs: undefined,
 };
 
 const configsSlice = createSlice({
@@ -25,13 +25,13 @@ const configsSlice = createSlice({
 		setConfig: (state, action: PayloadAction<TConfig>) => {
 			state.config = action.payload;
 		},
-		setTxtConfig: (state, action: PayloadAction<string>) => {
-			state.txtConfig = action.payload;
+		setTxtConfigs: (state, action: PayloadAction<string>) => {
+			state.txtConfigs = action.payload;
 		},
 	},
 });
 
-export const { setConfigs, setConfig, setTxtConfig } = configsSlice.actions;
+export const { setConfigs, setConfig, setTxtConfigs } = configsSlice.actions;
 
 export const getConfigsSelector = () =>
 	useAppSelector((state) => state[configsSlice.reducerPath].configs);
@@ -39,7 +39,7 @@ export const getConfigsSelector = () =>
 export const getConfigSelector = () =>
 	useAppSelector((state) => state[configsSlice.reducerPath].config);
 
-export const getTxtConfigSelector = () =>
-	useAppSelector((state) => state[configsSlice.reducerPath].txtConfig);
+export const getTxtConfigsSelector = () =>
+	useAppSelector((state) => state[configsSlice.reducerPath].txtConfigs);
 
 export default configsSlice;

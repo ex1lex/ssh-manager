@@ -2,10 +2,10 @@ import { useAppDispatch } from '@app/redux';
 import {
 	getConfigSelector,
 	getConfigsSelector,
-	getTxtConfigSelector,
+	getTxtConfigsSelector,
 	setConfig,
 	setConfigs,
-	setTxtConfig,
+	setTxtConfigs,
 } from '@app/redux/slices/configs';
 import { TConfig, TFile } from '@shared/types';
 import { toast } from 'react-toastify';
@@ -14,7 +14,7 @@ export const useConfig = () => {
 	const dispatch = useAppDispatch();
 	const configs = getConfigsSelector();
 	const config = getConfigSelector();
-	const txtConfig = getTxtConfigSelector();
+	const txtConfigs = getTxtConfigsSelector();
 
 	const _setConfigs = (_newConfigs: TConfig[]) => {
 		dispatch(setConfigs(_newConfigs));
@@ -24,8 +24,8 @@ export const useConfig = () => {
 		dispatch(setConfig(_newConfig));
 	};
 
-	const _setTxtConfig = (_newConfig: string) => {
-		dispatch(setTxtConfig(_newConfig));
+	const _setTxtConfigs = (_newConfig: string) => {
+		dispatch(setTxtConfigs(_newConfig));
 	};
 
 	const getConfigs = () => {
@@ -46,7 +46,7 @@ export const useConfig = () => {
 			.deleteConfig(host)
 			.then(({ list, txt }) => {
 				_setConfigs(list);
-				_setTxtConfig(txt);
+				_setTxtConfigs(txt);
 				if (config) {
 					const isEqual = host === config?.Host || host === config?.HostName;
 					if (isEqual) {
@@ -73,17 +73,17 @@ export const useConfig = () => {
 			});
 	};
 
-	const getTxtConfig = () => {
-		window.electron.getTxtConfig().then((_txtConfig) => {
-			_setTxtConfig(_txtConfig);
+	const getTxtConfigs = () => {
+		window.electron.getTxtConfig().then((_txtConfigs) => {
+			_setTxtConfigs(_txtConfigs);
 		});
 	};
 
-	const editTxtConfig = (fileContent: string) => {
+	const editTxtConfigs = (fileContent: string) => {
 		return window.electron
 			.editTxtConfig(fileContent)
 			.then(({ txt, list }) => {
-				_setTxtConfig(txt);
+				_setTxtConfigs(txt);
 				_setConfigs(list);
 			})
 			.then(() => toast('Config has been changed'));
@@ -93,12 +93,12 @@ export const useConfig = () => {
 		state: {
 			configs,
 			config,
-			txtConfig,
+			txtConfigs,
 		},
 		getConfigs,
 		getConfig,
-		getTxtConfig,
-		editTxtConfig,
+		getTxtConfigs,
+		editTxtConfigs,
 		createConfig,
 		deleteConfig,
 		refreshConfigs,

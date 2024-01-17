@@ -26,9 +26,9 @@ const TxtConfigPage: FC = () => {
 	const txtRef = useRef<HTMLParagraphElement>();
 
 	const {
-		getTxtConfig,
-		editTxtConfig,
-		state: { txtConfig },
+		getTxtConfigs,
+		editTxtConfigs,
+		state: { txtConfigs },
 	} = useConfig();
 
 	const {
@@ -39,13 +39,13 @@ const TxtConfigPage: FC = () => {
 	} = useForm({
 		resolver: yupResolver(schema),
 		defaultValues: {
-			config: txtConfig,
+			config: txtConfigs,
 		},
 	});
 
 	const onSubmit = handleSubmit(({ config }) => {
 		console.log('test', config);
-		editTxtConfig(config).then(() => toggleEditMode());
+		editTxtConfigs(config).then(() => toggleEditMode());
 	});
 
 	const onEditClick = useCallback(() => {
@@ -57,11 +57,11 @@ const TxtConfigPage: FC = () => {
 	}, [isEditMode]);
 
 	useEffect(() => {
-		setValue('config', txtConfig);
-	}, [txtConfig]);
+		setValue('config', txtConfigs);
+	}, [txtConfigs]);
 
 	useEffect(() => {
-		getTxtConfig();
+		getTxtConfigs();
 	}, []);
 
 	if (isEditMode) {
@@ -106,11 +106,13 @@ const TxtConfigPage: FC = () => {
 		<ConfigPageContainer showHeader title="Contents of the config file">
 			<StyledTxtConfigPage>
 				<StyledTxtConfigPageText ref={txtRef}>
-					{txtConfig}
+					{txtConfigs}
 				</StyledTxtConfigPageText>
-				<CustomButton type="button" onClick={onEditClick}>
-					Edit
-				</CustomButton>
+				<StyledTxtConfigPageContainer>
+					<CustomButton type="button" onClick={onEditClick}>
+						Edit
+					</CustomButton>
+				</StyledTxtConfigPageContainer>
 			</StyledTxtConfigPage>
 		</ConfigPageContainer>
 	);
