@@ -2,48 +2,6 @@ import type { ModuleOptions } from 'webpack';
 
 export const rules: Required<ModuleOptions>['rules'] = [
 	{
-		test: /\.scss$/i,
-		exclude: /\.module\.scss$/i,
-		use: [
-			{
-				loader: 'style-loader',
-			},
-			{
-				loader: 'css-loader',
-				options: {
-					importLoaders: 1,
-					modules: {
-						mode: 'icss',
-					},
-				},
-			},
-			{
-				loader: 'sass-loader',
-			},
-		],
-	},
-	{
-		test: /\.module\.scss$/i,
-		use: [
-			{
-				loader: 'style-loader',
-			},
-			{
-				loader: 'css-loader',
-				options: {
-					importLoaders: 1,
-					modules: {
-						mode: 'local',
-						localIdentName: '[hash:base64:5]--[local]',
-					},
-				},
-			},
-			{
-				loader: 'sass-loader',
-			},
-		],
-	},
-	{
 		test: /\.css$/,
 		use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
 	},
