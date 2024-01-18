@@ -1,4 +1,4 @@
-import { TFile } from '@shared/types';
+import { TConfig, TFile } from '@shared/types';
 
 const SSHConfig = window.require('ssh-config');
 
@@ -88,7 +88,14 @@ const getConfigByHost = async (host: string): Promise<Record<string, any>> => {
 	if (!config) {
 		throw new Error();
 	}
-	return config;
+	const txt = SSHConfig.stringify([configs.find({ Host: host })]);
+
+	return new Promise((res) =>
+		res({
+			config,
+			txt,
+		})
+	);
 };
 
 const deleteConfig = async (host: string) => {
@@ -132,12 +139,36 @@ const getTxtConfig = async () => {
 	return await getFile(defaultConfigName);
 };
 
-const editTxtConfig = async (fileContent: string) => {
+const editTxtConfigs = async (fileContent: string) => {
 	await checkAndCreateConfig(defaultConfigName);
 	await writeFile(defaultConfigName, fileContent);
 	return {
 		list: await getListOfConfigs(),
 		txt: fileContent,
+	};
+};
+
+const editTxtConfig = async (oldTxtConfig: string, newTxtConfig: string) => {
+	const parsedNewConfig = SSHConfig.parse(newTxtConfig.trim() + '\n\n');
+	if (!parsedNewConfig) {
+		throw new Error();
+	}
+	const parsedOldConfig = SSHConfig.parse(oldTxtConfig);
+	const oldListOfConfigs = await parseConfig();
+	const newListOfConfigs = oldListOfConfigs.map((item: any) => {
+		if (parsedOldConfig.find({ Host: item.value })) {
+			return parsedNewConfig[0];
+		}
+		return item;
+	});
+	await writeFile(defaultConfigName, SSHConfig.stringify(newListOfConfigs));
+
+	const list = await getListOfConfigs();
+	const txt = await getTxtConfig();
+
+	return {
+		list,
+		txt,
 	};
 };
 
@@ -148,5 +179,39 @@ export default {
 	createConfig,
 	createConfigFromString,
 	getTxtConfig,
+	editTxtConfigs,
 	editTxtConfig,
 };
+
+declare global {
+	interface Window {
+		electron: {
+			getListOfConfigs: () => Promise<TConfig[]>;
+			getConfigByHost: (host: string) => Promise<{
+				config: TConfig;
+				txt: string;
+			}>;
+			deleteConfig: (host: string) => Promise<{
+				list: TConfig[];
+				txt: string;
+			}>;
+			createConfig: (newConfig: TConfig) => Promise<void>;
+			createConfigFromString: (
+				newConfig: string,
+				file?: TFile
+			) => Promise<void>;
+			getTxtConfig: () => Promise<string>;
+			editTxtConfigs: (fileContent: string) => Promise<{
+				list: TConfig[];
+				txt: string;
+			}>;
+			editTxtConfig: (
+				oldTxtConfig: string,
+				newTxtConfig: string
+			) => Promise<{
+				list: TConfig[];
+				txt: string;
+			}>;
+		};
+	}
+}
