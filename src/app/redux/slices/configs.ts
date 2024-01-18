@@ -7,12 +7,14 @@ interface IState {
 	configs: TConfig[];
 	config?: TConfig;
 	txtConfigs?: string;
+	txtConfig?: string;
 }
 
 const initialState: IState = {
 	configs: [],
 	config: undefined,
 	txtConfigs: undefined,
+	txtConfig: undefined,
 };
 
 const configsSlice = createSlice({
@@ -28,10 +30,14 @@ const configsSlice = createSlice({
 		setTxtConfigs: (state, action: PayloadAction<string>) => {
 			state.txtConfigs = action.payload;
 		},
+		setTxtConfig: (state, action: PayloadAction<string>) => {
+			state.txtConfig = action.payload;
+		},
 	},
 });
 
-export const { setConfigs, setConfig, setTxtConfigs } = configsSlice.actions;
+export const { setConfigs, setConfig, setTxtConfigs, setTxtConfig } =
+	configsSlice.actions;
 
 export const getConfigsSelector = () =>
 	useAppSelector((state) => state[configsSlice.reducerPath].configs);
@@ -41,5 +47,8 @@ export const getConfigSelector = () =>
 
 export const getTxtConfigsSelector = () =>
 	useAppSelector((state) => state[configsSlice.reducerPath].txtConfigs);
+
+export const getTxtConfigSelector = () =>
+	useAppSelector((state) => state[configsSlice.reducerPath].txtConfig);
 
 export default configsSlice;

@@ -2,19 +2,24 @@ import { useAppDispatch } from '@app/redux';
 import {
 	getConfigSelector,
 	getConfigsSelector,
+	getTxtConfigSelector,
 	getTxtConfigsSelector,
 	setConfig,
 	setConfigs,
+	setTxtConfig,
 	setTxtConfigs,
 } from '@app/redux/slices/configs';
 import { TConfig, TFile } from '@shared/types';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const useConfig = () => {
+	const { configId } = useParams();
 	const dispatch = useAppDispatch();
 	const configs = getConfigsSelector();
 	const config = getConfigSelector();
 	const txtConfigs = getTxtConfigsSelector();
+	const txtConfig = getTxtConfigSelector();
 
 	const _setConfigs = (_newConfigs: TConfig[]) => {
 		dispatch(setConfigs(_newConfigs));
@@ -22,6 +27,10 @@ export const useConfig = () => {
 
 	const _setConfig = (_newConfig: TConfig) => {
 		dispatch(setConfig(_newConfig));
+	};
+
+	const _setTxtConfig = (_newTxtConfig: string) => {
+		dispatch(setTxtConfig(_newTxtConfig));
 	};
 
 	const _setTxtConfigs = (_newConfig: string) => {
@@ -35,10 +44,10 @@ export const useConfig = () => {
 	};
 
 	const getConfig = (host: string) => {
-		const findedConfig = configs.find(
-			(_config) => _config?.Host === host || _config?.HostName === host
-		);
-		_setConfig(findedConfig);
+		window.electron.getConfigByHost(host).then((_res) => {
+			_setTxtConfig(_res.txt);
+			_setConfig(_res.config);
+		});
 	};
 
 	const deleteConfig = (host: string) => {
@@ -81,7 +90,7 @@ export const useConfig = () => {
 
 	const editTxtConfigs = (fileContent: string) => {
 		return window.electron
-			.editTxtConfig(fileContent)
+			.editTxtConfigs(fileContent)
 			.then(({ txt, list }) => {
 				_setTxtConfigs(txt);
 				_setConfigs(list);
@@ -89,16 +98,49 @@ export const useConfig = () => {
 			.then(() => toast('Config has been changed'));
 	};
 
+	const editTxtConfig = (newTxtConfig: string) => {
+		return window.electron
+			.editTxtConfig(txtConfig, newTxtConfig)
+			.then(({ txt, list }) => {
+				_setTxtConfigs(txt);
+				_setConfigs(list);
+				if (config) {
+					if (configId) {
+						const isEqual =
+							configId === config?.Host || configId === config?.HostName;
+						if (isEqual) {
+							_setConfig(
+								list.find(
+									(item) =>
+										configId === item?.Host || configId === item?.HostName
+								)
+							);
+						}
+					}
+				}
+			})
+			.then(() => toast('Config has been changed'));
+		// 	return window.electron
+		// 		.editTxtConfig(,txtConfigContent)
+		// 		.then(({ txt, list }) => {
+		// 			_setTxtConfigs(txt);
+		// 			_setConfigs(list);
+		// 		})
+		// 		.then(() => toast('Config has been changed'));
+	};
+
 	return {
 		state: {
 			configs,
 			config,
 			txtConfigs,
+			txtConfig,
 		},
 		getConfigs,
 		getConfig,
 		getTxtConfigs,
 		editTxtConfigs,
+		editTxtConfig,
 		createConfig,
 		deleteConfig,
 		refreshConfigs,
