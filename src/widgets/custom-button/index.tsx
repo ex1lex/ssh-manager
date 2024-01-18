@@ -13,7 +13,8 @@ interface Props {
 
 const CustomButton: FC<Props> = ({
 	children,
-	onClick,
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	onClick = () => {},
 	type = 'button',
 	variant = 'fill',
 	color = 'primary',

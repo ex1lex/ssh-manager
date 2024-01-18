@@ -1,7 +1,6 @@
 import { ROUTES } from '@shared/constants';
 import { useConfig } from '@shared/hooks';
 import DeleteIcon from '@widgets/delete-icon';
-import EditIcon from '@widgets/edit-icon';
 import React, { FC, useEffect } from 'react';
 
 import {
@@ -24,10 +23,6 @@ const ConfigsList: FC = () => {
 		deleteConfig(val);
 	};
 
-	const onEditConfigClick = (val: string) => {
-		console.log('EDIT', val);
-	};
-
 	useEffect(() => {
 		getConfigs();
 	}, []);
@@ -45,13 +40,6 @@ const ConfigsList: FC = () => {
 						<StyledConfigListItem key={`configs-list-item-${value}`}>
 							<StyledConfigListLink to={link}>{value}</StyledConfigListLink>
 							<StyledConfigListActions>
-								<StyledCustomButton
-									variant="simple"
-									color="currentColor"
-									onClick={() => onEditConfigClick(value)}
-								>
-									<EditIcon />
-								</StyledCustomButton>
 								<StyledCustomButton
 									variant="simple"
 									color="currentColor"

@@ -59,11 +59,13 @@ const NewConfigPage: FC = () => {
 						errorMessage={errors?.config?.message}
 						variant="textarea"
 					/>
-					<CustomDropzone
-						fileName={file?.name}
-						onLoadFile={onLoadFile}
-						onRemoveFile={onRemoveFile}
-					/>
+					{false && (
+						<CustomDropzone
+							fileName={file?.name}
+							onLoadFile={onLoadFile}
+							onRemoveFile={onRemoveFile}
+						/>
+					)}
 					<CustomButton type="submit">Create config</CustomButton>
 				</StyledNewConfigPageForm>
 			</StyledNewConfigPage>

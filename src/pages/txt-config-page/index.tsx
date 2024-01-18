@@ -75,7 +75,7 @@ const TxtConfigPage: FC = () => {
 							formProps={{
 								...register('config'),
 								style: {
-									height: `${current.scrollHeight + 30}px`,
+									height: `${current?.scrollHeight + 30}px`,
 									color: Theme.colors.text,
 									fontStyle: 'normal',
 									fontSize: '16px',
