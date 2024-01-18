@@ -1,6 +1,21 @@
 import styled from 'styled-components';
 
-export const StyledConfigPage = styled.ul`
+export const StyledConfigPage = styled.div`
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+`;
+
+export const StyledConfigPageContainer = styled.div`
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+	gap: 15px;
+`;
+
+export const StyledConfigPageList = styled.ul`
 	box-sizing: border-box;
 	width: 100%;
 	list-style: none;
@@ -27,4 +42,10 @@ export const StyledConfigPageValue = styled.span`
 	font-weight: normal;
 	margin-left: 5px;
 	word-break: break-word;
+`;
+
+export const StyledConfigPageForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 `;
